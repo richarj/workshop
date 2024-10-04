@@ -14,6 +14,7 @@ class Problem(Enum):
     SOFTWARE_PROBLEM = "SOFTWARE_PROBLEM"
     BATTERY_CHANGE = "BATTERY_CHANGE"
 
+
 class Persona:
     def __init__(self, rut, firstname, lastname, email, phone):
         self.rut = rut
@@ -32,7 +33,7 @@ class Tech(Persona):
 class Client(Persona):
     def __int__(self, rut, firstname, lastname, email, phone):
         super().__int__(rut, firstname, lastname, email, phone)
-        self.devices = []
+        self.devices = list()
 
     def register_device(self, device):
         self.devices.append(device)
@@ -46,7 +47,7 @@ class Device:
 
 
 class WorkOrder:
-    def __init__(self, tech, device, diagnosis):
+    def __init__(self, tech, device):
         self.tech = tech
         self.device = device
         self.diagnosis = None
@@ -62,7 +63,8 @@ class WorkOrder:
 
 
 class WorkShop:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.clients = []
         self.techs = []
         self.workOrders = []
@@ -76,5 +78,34 @@ class WorkShop:
     def register_order(self, order):
         self.workOrders.append(order)
 
-    def get_report(self, _type):
-        
+    def get_report_devices(self):
+        report = {}
+        for work in self.workOrders:
+            if work.device.model not in report:
+                report[work.device.model] = 0
+
+            report[work.device.model] += 1
+
+        return report
+
+    def get_report_techs(self):
+        pass
+
+
+taller = WorkShop("One parts")
+client1 = Client('1', 'Juan', 'Amarantis', 'juan@gmail.com', '000')
+movil1 = Device('Iphone', 'Apple', Problem.BATTERY_CHANGE)
+
+print(client1.devices)
+
+client1.register_device(movil1)
+
+
+tech1 = Tech('2', 'Maria', 'Perez', 'maria@gmail.com', Problem.BATTERY_CHANGE)
+orden1 = WorkOrder(tech1, movil1)
+taller.register_order(orden1)
+
+
+taller.get_report_devices()
+
+
