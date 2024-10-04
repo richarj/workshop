@@ -1,0 +1,65 @@
+@startuml
+   enum Problemas {
+      PANTALLA_ROTA
+      PROBLEMA_SOFTWARE
+      CAMBIO_BATERIA
+   }
+
+   enum Estados {
+      RECEPCIONADO
+      EN_CURSO
+      ESPERA_PIEZAS
+      ENTREGADO
+   }
+
+   class Cliente {
+     rut: String
+     firstName: String
+     lastName: String
+     email: String
+     telefono: String
+     dispositivos: Dispositivo[]
+     registar_dispoisitivo(dispositivo)
+   }
+   class Dispositivo {
+      marca: String
+      modelo: String
+      problema: Problemas 
+   }
+   class OrdenTrabajo {
+      tecnico: Tecnico
+      dispositivo: Dispositivo
+      fecha_recepción: Date,
+      fecha_entrega: Date
+      diagnostico: Problemas
+      status: Estados
+      cambiar_status(status)
+      realizar_diagnostico(disgnostico)
+   }
+   class Técnico {
+      rut: String
+      firstName: String
+      lastName: String
+      email: String
+      telefono: String
+      especialidad: Problemas[]
+   }
+
+   class Taller {
+      clientes: Cliente[]
+      técnicos: Técnico[]
+      reparaciones: OrdenTrabajo[]
+      registar_cliente(cliente)
+      registar_tecnico(tecnico)
+      registrar_order(orden)
+      generar_reportes(tipo)
+   }
+
+
+OrdenTrabajo o-- Dispositivo
+OrdenTrabajo o-- Técnico
+OrdenTrabajo --* Taller
+Dispositivo --* Cliente
+Taller *-- Técnico
+Taller *-- Cliente
+@enduml
