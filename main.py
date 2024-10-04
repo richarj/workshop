@@ -25,14 +25,14 @@ class Persona:
 
 
 class Tech(Persona):
-    def __int__(self, rut, firstname, lastname, email, phone, kind):
-        super().__int__(rut, firstname, lastname, email, phone)
+    def __init__(self, rut, firstname, lastname, email, phone, kind):
+        super().__init__(rut, firstname, lastname, email, phone)
         self.kind = kind
 
 
 class Client(Persona):
-    def __int__(self, rut, firstname, lastname, email, phone):
-        super().__int__(rut, firstname, lastname, email, phone)
+    def __init__(self, rut, firstname, lastname, email, phone):
+        super().__init__(rut, firstname, lastname, email, phone)
         self.devices = list()
 
     def register_device(self, device):
@@ -94,18 +94,22 @@ class WorkShop:
 
 taller = WorkShop("One parts")
 client1 = Client('1', 'Juan', 'Amarantis', 'juan@gmail.com', '000')
-movil1 = Device('Iphone', 'Apple', Problem.BATTERY_CHANGE)
 
-print(client1.devices)
+movil1 = Device('Iphone', 'Apple', Problem.BATTERY_CHANGE)
+movil2 = Device('Tablñe', 'Apple', Problem.SOFTWARE_PROBLEM)
+
 
 client1.register_device(movil1)
+client1.register_device(movil2)
 
 
-tech1 = Tech('2', 'Maria', 'Perez', 'maria@gmail.com', Problem.BATTERY_CHANGE)
+tech1 = Tech('2', 'Maria', 'Perez', 'maria@gmail.com', '111', Problem.BATTERY_CHANGE)
 orden1 = WorkOrder(tech1, movil1)
+orden2 = WorkOrder(tech1, movil2)
 taller.register_order(orden1)
+taller.register_order(orden2)
 
 
-taller.get_report_devices()
+print(taller.get_report_devices())
 
 
